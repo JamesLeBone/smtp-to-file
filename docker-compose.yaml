@@ -1,0 +1,13 @@
+services:
+  smtp2file:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: smtp2file
+    container_name: smtp2file
+    ports:
+      - "8085:8085"
+      - "25:25"
+    volumes:
+      - ./inbox:/app/inbox
+    restart: unless-stopped
