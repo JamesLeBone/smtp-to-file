@@ -4,8 +4,19 @@ import { simpleParser } from 'mailparser'
 import fs from 'node:fs'
 import express, { Request, Response } from 'express'
 
+function determineHttpPort() {
+    const defaultPort = 8085
+    if (!process.env.HTTP_PORT) return defaultPort
+    const parsed = Number.parseInt(process.env.HTTP_PORT)
+    if (Number.isNaN(parsed) || parsed < 1) {
+        console.warn(`Invalid HTTP port supplied, using default ${defaultPort}`)
+        return defaultPort
+    }
+    return parsed
+}
+
 const smtpPort = 25
-const httpPort = 8085
+const httpPort = determineHttpPort()
 
 type AddressLike = {
     text?: string
@@ -320,6 +331,5 @@ httpServer.use((_req: Request, res: Response) => {
 })
 
 httpServer.listen(httpPort, '0.0.0.0', () => {
-    console.info('starting')
     console.log(`HTTP server listening on 0.0.0.0:${httpPort}`)
 })

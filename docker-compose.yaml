@@ -4,10 +4,14 @@ services:
       context: .
       dockerfile: Dockerfile
     image: smtp2file
+    environment:
+      - HTTP_PORT=${HTTP_PORT}
     container_name: smtp2file
     ports:
-      - "8085:8085"
-      - "25:25"
+      - "${HTTP_PORT}:${HTTP_PORT}" # Expose web interface port
+      - "25:25" # Expose SMTP port
     volumes:
-      - ./inbox:/app/inbox
+      - ./inbox:/app/inbox # Mount inbox directory
+    # stdin_open: true
+    # tty: true
     restart: unless-stopped
