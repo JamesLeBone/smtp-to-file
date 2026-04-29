@@ -3,3 +3,4 @@ inbox/
 *.log
 .env
 .DS_Store
+index.js

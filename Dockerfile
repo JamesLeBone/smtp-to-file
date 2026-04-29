@@ -1,11 +1,11 @@
-FROM node:latest
+FROM node:22-slim
 
 WORKDIR /app
 
+# Install dependencies first for reproducible image builds
+
 # Copy package files
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
 
 # Copy application files
@@ -18,7 +18,6 @@ RUN mkdir -p inbox
 EXPOSE 25
 EXPOSE 8085
 
-# Start the application
 CMD ["npm", "run", "start"]
 
-
+#CMD ["bash"]
